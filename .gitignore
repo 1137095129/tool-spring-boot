@@ -1,3 +1,6 @@
 .idea/
 tool-spring-boot-core/target/
 tool-spring-boot-util/target/
+tool-spring-boot-test/target/
+tool-spring-boot-user/target/
+*.iml

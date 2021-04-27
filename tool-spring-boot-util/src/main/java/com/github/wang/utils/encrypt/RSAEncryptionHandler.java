@@ -1,9 +1,5 @@
 package com.github.wang.utils.encrypt;
 
-import sun.security.pkcs11.SunPKCS11;
-import sun.security.smartcardio.SunPCSC;
-
-import javax.crypto.Cipher;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;

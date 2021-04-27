@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.wang.config.WebSecurityConfig
+com.github.wang.config.WebSecurityConfig,\
+com.github.wang.config.CustomizedUserProperties,\
+com.github.wang.config.HandlerAutoConfig

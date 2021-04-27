@@ -1,5 +1,6 @@
 import com.github.wang.utils.encrypt.BaseEncryptionUtil;
 import com.github.wang.utils.encrypt.RSAEncryptionHandler;
+import com.github.wang.utils.regex.RegexUtil;
 import org.junit.Test;
 
 import java.security.KeyPair;

@@ -1,25 +1,25 @@
 package com.github.wang.config;
 
-import com.github.wang.core.IObtainUsernameAndPassword;
+import com.github.wang.core.IObtainUsernameAndPasswordHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class CustomizedUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private IObtainUsernameAndPassword iObtainUsernameAndPassword;
+    private IObtainUsernameAndPasswordHandler iObtainUsernameAndPasswordHandler;
 
     @Override
     protected String obtainPassword(HttpServletRequest request) {
-        return iObtainUsernameAndPassword.obtainUserByRequest(request).getUsername();
+        return iObtainUsernameAndPasswordHandler.obtainUserByRequest(request).getUsername();
     }
 
     @Override
     protected String obtainUsername(HttpServletRequest request) {
-        return iObtainUsernameAndPassword.obtainUserByRequest(request).getPassword();
+        return iObtainUsernameAndPasswordHandler.obtainUserByRequest(request).getPassword();
     }
 
-    public void setiObtainUsernameAndPassword(IObtainUsernameAndPassword iObtainUsernameAndPassword) {
-        this.iObtainUsernameAndPassword = iObtainUsernameAndPassword;
+    public void setiObtainUsernameAndPasswordHandler(IObtainUsernameAndPasswordHandler iObtainUsernameAndPasswordHandler) {
+        this.iObtainUsernameAndPasswordHandler = iObtainUsernameAndPasswordHandler;
     }
 }
