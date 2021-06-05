@@ -22,6 +22,7 @@
         <cn.hutool.version>5.0.6</cn.hutool.version>
         <spring.boot.version>2.2.7.RELEASE</spring.boot.version>
         <servlet.api.version>2.5</servlet.api.version>
+        <java.jwt.version>3.9.0</java.jwt.version>
     </properties>
 
     <dependencyManagement>
@@ -42,6 +43,11 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>${servlet.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java.jwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

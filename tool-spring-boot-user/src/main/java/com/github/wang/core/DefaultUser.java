@@ -9,6 +9,8 @@ import java.util.Collection;
 public class DefaultUser extends User implements IUserInfo {
     private static final long serialVersionUID = 5280184909942967577L;
     private Integer userId;
+    private String privateKeyStr;
+    private String publicKeyStr;
 
     public DefaultUser(Integer userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -29,5 +31,19 @@ public class DefaultUser extends User implements IUserInfo {
         this.userId = userId;
     }
 
+    public String getPrivateKeyStr() {
+        return privateKeyStr;
+    }
 
+    public void setPrivateKeyStr(String privateKeyStr) {
+        this.privateKeyStr = privateKeyStr;
+    }
+
+    public String getPublicKeyStr() {
+        return publicKeyStr;
+    }
+
+    public void setPublicKeyStr(String publicKeyStr) {
+        this.publicKeyStr = publicKeyStr;
+    }
 }

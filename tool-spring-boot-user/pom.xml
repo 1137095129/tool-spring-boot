@@ -47,6 +47,10 @@
             <artifactId>tool-spring-boot-util</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

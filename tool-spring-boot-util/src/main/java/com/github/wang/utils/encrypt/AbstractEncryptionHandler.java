@@ -34,6 +34,8 @@ public abstract class AbstractEncryptionHandler implements IEncryption {
 
     public abstract KeyPair createKeyPair(int keySize) throws NoSuchAlgorithmException;
 
+    public abstract EncryptKeyObj createEncryptKeyObj(int keySize) throws Exception;
+
     @Override
     public KeyPair createKeyPair(String algorithm, int keySize) throws NoSuchAlgorithmException {
         //构建一个安全的随机数源
@@ -50,6 +52,14 @@ public abstract class AbstractEncryptionHandler implements IEncryption {
             return encrypt(targetValue, getPrivateKeyByBaseEncodeKey(key), keySize, true);
         }
         return encrypt(targetValue, getPublicKeyByBaseEncodeKey(key), keySize, true);
+    }
+
+    @Override
+    public byte[] encrypt(String targetValue, String key, int keySize, boolean isPrivateKey, boolean toBcd) throws Exception {
+        if (isPrivateKey) {
+            return encrypt(targetValue, getPrivateKeyByBaseEncodeKey(key), keySize, toBcd);
+        }
+        return encrypt(targetValue, getPublicKeyByBaseEncodeKey(key), keySize, toBcd);
     }
 
     /**
@@ -86,6 +96,15 @@ public abstract class AbstractEncryptionHandler implements IEncryption {
             return decrypt(targetValue, getPrivateKeyByBaseEncodeKey(key), keySize, true);
         }
         return decrypt(targetValue, getPublicKeyByBaseEncodeKey(key), keySize, true);
+    }
+
+    @Override
+    public byte[] decrypt(String targetValue, String key, int keySize, boolean isPrivateKey, boolean fromBcd) throws Exception {
+        targetValue = BaseEncryptionUtil.base64DecodeToString(targetValue);
+        if (isPrivateKey) {
+            return decrypt(targetValue, getPrivateKeyByBaseEncodeKey(key), keySize, fromBcd);
+        }
+        return decrypt(targetValue, getPublicKeyByBaseEncodeKey(key), keySize, fromBcd);
     }
 
     /**

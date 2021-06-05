@@ -1,34 +1,32 @@
 package com.github.wang.config;
 
-import com.github.wang.core.IObtainUserHandler;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import com.github.wang.handler.UserTokenWithRedisHandlerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class TokenFilter implements Filter {
 
-    private IObtainUserHandler iObtainUserHandler;
+    private final static Logger logger = LoggerFactory.getLogger(TokenFilter.class);
 
-    public void setiObtainUserHandler(IObtainUserHandler iObtainUserHandler) {
-        this.iObtainUserHandler = iObtainUserHandler;
+    private UserTokenWithRedisHandlerAdapter handlerAdapter;
+
+    public void setHandlerAdapter(UserTokenWithRedisHandlerAdapter handlerAdapter) {
+        this.handlerAdapter = handlerAdapter;
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         try {
-            User user = iObtainUserHandler.obtainUser(servletRequest);
-            if (user != null) {
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, user, user.getAuthorities());
-                SecurityContextHolder.setContext(SecurityContextHolder.createEmptyContext());
-                SecurityContextHolder.getContext().setAuthentication(token);
+            if (handlerAdapter.handleRequest((HttpServletRequest) servletRequest)) {
+                logger.info("authentication success");
             } else {
-                SecurityContextHolder.setContext(SecurityContextHolder.createEmptyContext());
-                SecurityContextHolder.getContext().setAuthentication(null);
+                logger.info("authentication fail");
             }
-        }finally {
+        } finally {
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

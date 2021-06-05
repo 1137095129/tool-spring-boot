@@ -8,7 +8,7 @@ import java.security.spec.InvalidKeySpecException;
 
 public interface IEncryption {
 
-    KeyPair createKeyPair(String algorithm,int keySize) throws NoSuchAlgorithmException;
+    KeyPair createKeyPair(String algorithm, int keySize) throws NoSuchAlgorithmException;
 
     /**
      * 加密
@@ -20,6 +20,8 @@ public interface IEncryption {
      */
     byte[] encrypt(String targetValue, String key, int keySize, boolean isPrivateKey) throws Exception;
 
+    byte[] encrypt(String targetValue, String key, int keySize, boolean isPrivateKey, boolean toBcd) throws Exception;
+
     /**
      * 解密
      *
@@ -29,6 +31,8 @@ public interface IEncryption {
      * @return
      */
     byte[] decrypt(String targetValue, String key, int keySize, boolean isPrivateKey) throws Exception;
+
+    byte[] decrypt(String targetValue, String key, int keySize, boolean isPrivateKey, boolean fromBcd) throws Exception;
 
     /**
      * 根据私钥对目标字符串生成签名

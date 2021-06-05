@@ -1,9 +1,10 @@
 package com.github.wang.core;
 
-import org.springframework.security.core.userdetails.User;
+import javax.servlet.http.HttpServletRequest;
 
-import javax.servlet.ServletRequest;
-
+/**
+ * 通过request获取用户信息的处理器
+ */
 public interface IObtainUserHandler {
-    User obtainUser(ServletRequest request);
+    DefaultUser obtainUser(HttpServletRequest request);
 }

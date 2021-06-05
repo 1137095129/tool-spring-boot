@@ -2,6 +2,7 @@ package com.github.wang.config;
 
 import com.github.wang.core.IObtainUserHandler;
 import com.github.wang.core.IObtainUsernameAndPasswordHandler;
+import com.github.wang.handler.UserTokenWithRedisHandlerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionManager;
@@ -76,10 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private AuthenticationSuccessHandler authenticationSuccessHandler;
 
-    /**
-     * 从web request中解析用户信息
-     */
-    private IObtainUserHandler iObtainUserHandler;
+    private UserTokenWithRedisHandlerAdapter userTokenWithRedisHandlerAdapter;
 
     private CustomizedUsernamePasswordAuthenticationFilter customizedUsernamePasswordAuthenticationFilter() throws Exception {
         CustomizedUsernamePasswordAuthenticationFilter filter = new CustomizedUsernamePasswordAuthenticationFilter();
@@ -136,7 +134,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAt(customizedUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         TokenFilter filter = new TokenFilter();
-        filter.setiObtainUserHandler(iObtainUserHandler);
+        filter.setHandlerAdapter(userTokenWithRedisHandlerAdapter);
         /**
          * 放在默认的加载用户过滤器后
          */
@@ -194,7 +192,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void setiObtainUserHandler(IObtainUserHandler iObtainUserHandler) {
-        this.iObtainUserHandler = iObtainUserHandler;
+    public void setCustomizedUserProperties(CustomizedUserProperties customizedUserProperties) {
+        this.customizedUserProperties = customizedUserProperties;
+    }
+
+    @Autowired
+    public void setUserTokenWithRedisHandlerAdapter(UserTokenWithRedisHandlerAdapter userTokenWithRedisHandlerAdapter) {
+        this.userTokenWithRedisHandlerAdapter = userTokenWithRedisHandlerAdapter;
     }
 }

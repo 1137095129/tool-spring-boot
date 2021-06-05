@@ -29,6 +29,17 @@ public class RSAEncryptionHandler extends AbstractEncryptionHandler {
     }
 
     @Override
+    public EncryptKeyObj createEncryptKeyObj(int keySize) throws Exception {
+        KeyPair keyPair = createKeyPair(keySize);
+        EncryptKeyObj encryptKeyObj = new EncryptKeyObj();
+        encryptKeyObj.setPrivateKey(keyPair.getPrivate());
+        encryptKeyObj.setPublicKey(keyPair.getPublic());
+        encryptKeyObj.setPublicKeyStr(BaseEncryptionUtil.base64EncodeToString(keyPair.getPublic().getEncoded()));
+        encryptKeyObj.setPrivateKeyStr(BaseEncryptionUtil.base64EncodeToString(keyPair.getPrivate().getEncoded()));
+        return encryptKeyObj;
+    }
+
+    @Override
     public String sign(String targetValue, String privateKey) throws InvalidKeySpecException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         PrivateKey rsaPrivateKeyByEncodeKey = getPrivateKeyByBaseEncodeKey(privateKey);
         Signature signature = Signature.getInstance("RSA");
